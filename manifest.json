@@ -1,0 +1,48 @@
+{
+
+  "name": "SAGCAPP",
+
+  "short_name": "SAGC",
+
+  "start_url": "/index.html",
+
+  "display": "standalone",
+
+  "background_color": "#121212",
+
+  "theme_color": "#1e1e1e",
+
+  "icons": [
+
+    {
+
+      "src": "foto1.jpg",
+
+      "sizes": "192x192",
+
+      "type": "image/jpeg",
+
+      "purpose": "any maskable"
+
+    },
+
+    {
+
+      "src": "foto1.jpg",
+
+      "sizes": "512x512",
+
+      "type": "image/jpeg",
+
+      "purpose": "any maskable"
+
+    }
+
+  ]
+
+}
+
+
+
+
+

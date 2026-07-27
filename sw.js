@@ -1,14 +1,33 @@
-self.addEventListener('install', (e) => {
+const CACHE_NAME = "sagc-v1";
 
-  console.log('[Service Worker] Instalado com sucesso!');
+
+self.addEventListener("install", event => {
+
+  self.skipWaiting();
+
+});
+
+
+self.addEventListener("activate", event => {
+
+  event.waitUntil(clients.claim());
 
 });
 
 
-self.addEventListener('fetch', (e) => {
+self.addEventListener("fetch", event => {
 
-  e.respondWith(fetch(e.request));
+  event.respondWith(
+
+    caches.match(event.request).then(response => {
+
+      return response || fetch(event.request);
+
+    })
+
+  );
 
 });
+
 
 

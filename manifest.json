@@ -1,28 +1,23 @@
+
 {
 
-  "name": "SAGC Notícias",
+  "short_name": "SAGCAPP",
 
-  "short_name": "SAGC",
+  "name": "SAGCAPP",
 
-  "description": "Portal SAGC",
-
-  "start_url": "./",
-
-  "scope": "./",
+  "start_url": "/",
 
   "display": "standalone",
 
   "background_color": "#121212",
 
-  "theme_color": "#1e1e1e",
-
-  "orientation": "portrait",
+  "theme_color": "#121212",
 
   "icons": [
 
     {
 
-      "src": "logo-192.png",
+      "src": "logo.png",
 
       "sizes": "192x192",
 
@@ -32,7 +27,7 @@
 
     {
 
-      "src": "logo-512.png",
+      "src": "logo.png",
 
       "sizes": "512x512",
 

@@ -1,43 +1,48 @@
 
 <!DOCTYPE html>
 
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>SAGC</title>
 
 <style>
 
-*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#eef2f7;margin:0}
 
-body{font-family:Arial,sans-serif;background:#121212;color:#fff;display:flex;justify-content:center;padding:10px}
+header{position:sticky;top:0;background:#128c7e;color:#fff;padding:14px;text-align:center;font-weight:bold}
 
-.app-container{width:100%;max-width:380px}
+#feed{max-width:360px;margin:12px auto}
 
-.app-header{text-align:center;padding:10px;border-bottom:1px solid #2a2a2a;margin-bottom:10px}
+.card{background:#fff;border-radius:10px;padding:12px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
 
-.app-header h1{color:#25d366}
+img{display:block;margin:10px auto;max-width:280px;max-height:200px;width:auto;height:auto;border-radius:8px}
 
-.post-card{background:#1e1e1e;padding:8px;border-radius:8px;margin-bottom:8px;border:1px solid #2a2a2a}
+.actions{display:flex;gap:6px;margin-top:10px}
 
-.post-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+button{flex:1;padding:8px;border:1px solid #ccc;border-radius:5px;background:#f9f9f9;cursor:pointer}
 
-.perfil{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid #25d366}
+button.curtido{color:#e0245e;border-color:#e0245e;background:#ffebee}
 
-.nome{font-weight:bold}.data{font-size:11px;color:#999}
 
-.post-imagem{width:100%;height:110px;object-fit:cover;border-radius:6px;margin:5px 0}
+/* Estilo da caixa de comentários */
 
-.post-conteudo{font-size:13px;color:#ccc;margin:6px 0}
+.comments-section{display:none;margin-top:10px;padding-top:8px;border-top:1px dashed #ccc}
 
-.post-actions{display:flex;gap:4px;border-top:1px solid #2a2a2a;padding-top:6px}
+.comment-input-box{display:flex;gap:4px;margin-bottom:6px}
 
-.btn-action{flex:1;padding:6px;background:none;color:#bbb;border:none}
+.comment-input-box input{flex:1;padding:6px;border:1px solid #ccc;border-radius:4px;font-size:0.8em}
+
+.comment-input-box button{flex:0;padding:6px 10px;background:#128c7e;color:#fff;border:none;border-radius:4px}
+
+.comment-list{font-size:0.8em;color:#333}
+
+.comment-item{background:#f0f2f5;padding:5px 8px;border-radius:4px;margin-bottom:4px}
 
 </style>
 
@@ -45,58 +50,44 @@ body{font-family:Arial,sans-serif;background:#121212;color:#fff;display:flex;jus
 
 <body>
 
-<div class="app-container">
+<header>SAGC</header>
 
-<div class="app-header"><h1>SAGC</h1></div>
+<div id="feed">
 
-<div class="post-card">
+<div class="card">
 
-<div class="post-header">
+<div>03/08/2026</div>
 
-<img src="logo.png" class="perfil" onerror="this.style.display='none'">
+<h2>Publicação SAGC</h2>
 
-<div><div class="nome">SAGC</div><div class="data">30/07/2026</div></div>
+<img src="foto1.jpg" onerror="this.style.display='none'">
 
-</div>
+<p>Substitua este conteúdo pelo seu posts.json ou adapte conforme necessário.</p>
 
-<h3>Publicação de Teste</h3>
+<div class="actions">
 
-<img src="foto1.jpg" class="post-imagem" onerror="this.style.display='none'">
+<button id="btn-like" onclick="curtir()">❤️ <span id="likes-count">0</span></button>
 
-<p class="post-conteudo">Seu novo layout compacto está funcionando.</p>
+<button onclick="toggleComentarios()">💬 Comentar</button>
 
-<div class="post-actions">
-
-<button class="btn-action" onclick="curtir(this)">
-
-❤️ <span>0</span>
-
-</button>
-
-
-<button class="btn-action" onclick="comentar()">
-
-💬 Comentar
-
-</button>
-
-
-<button class="btn-action" onclick="compartilhar()">
-
-📤 Compartilhar
-
-</button>
+<button onclick="compartilhar()">📤 Compartilhar</button>
 
 </div>
 
 
-<div id="comentarios" style="margin-top:10px;">
+<!-- Área de comentários -->
 
-<div style="font-size:12px;color:#999;">
+<div class="comments-section" id="comments-box">
 
-💬 <span id="totalComentarios">0</span> comentários
+<div class="comment-input-box">
+
+<input type="text" id="input-comment" placeholder="Escreva um comentário...">
+
+<button onclick="adicionarComentario()">Enviar</button>
 
 </div>
+
+<div class="comment-list" id="comment-list"></div>
 
 </div>
 
@@ -104,113 +95,102 @@ body{font-family:Arial,sans-serif;background:#121212;color:#fff;display:flex;jus
 </div>
 
 </div>
+
+
 <script>
 
-function curtir(botao){
+function curtir() {
 
-    let span = botao.querySelector("span");
+    const btn = document.getElementById('btn-like');
 
-    let n = parseInt(span.innerText);
+    const count = document.getElementById('likes-count');
+
+    let total = parseInt(count.innerText);
 
 
-    if(botao.classList.contains("curtido")){
+    if (btn.classList.contains('curtido')) {
 
-        botao.classList.remove("curtido");
+        btn.classList.remove('curtido');
 
-        span.innerText = n - 1;
+        total--;
 
-    }else{
+    } else {
 
-        botao.classList.add("curtido");
+        btn.classList.add('curtido');
 
-        span.innerText = n + 1;
+        total++;
 
     }
+
+    count.innerText = total;
 
 }
 
 
-function comentar(){
+function toggleComentarios() {
 
+    const box = document.getElementById('comments-box');
 
-    let texto = prompt("Digite seu comentário:");
-
-
-    if(!texto || texto.trim()=="") return;
-
-
-    let area = document.getElementById("comentarios");
-
-
-    let total = document.getElementById("totalComentarios");
-
-
-    let comentario = document.createElement("div");
-
-
-    comentario.style.background="#252525";
-
-    comentario.style.padding="8px";
-
-    comentario.style.marginTop="6px";
-
-    comentario.style.borderRadius="6px";
-
-    comentario.style.color="#fff";
-
-
-    comentario.innerHTML =
-
-    "<b>👤 Anônimo</b><br>"+texto;
-
-
-    area.appendChild(comentario);
-
-
-    total.innerText = parseInt(total.innerText)+1;
+    box.style.display = box.style.display === 'block' ? 'none' : 'block';
 
 }
 
 
-function compartilhar(){
+function adicionarComentario() {
+
+    const input = document.getElementById('input-comment');
+
+    const list = document.getElementById('comment-list');
+
+    if (input.value.trim() === '') return;
 
 
-    if(navigator.share){
+    const item = document.createElement('div');
+
+    item.className = 'comment-item';
+
+    item.innerText = input.value;
 
 
-        navigator.share({
+    list.appendChild(item);
 
-            title:"SAGC",
+    input.value = '';
 
-            text:"Veja esta postagem!",
-
-            url:location.href
-
-        });
+}
 
 
-    }else if(navigator.clipboard){
+function compartilhar() {
+
+    const url = window.location.href;
+
+    
+
+    // Tenta copiar usando o método tradicional
+
+    const tempInput = document.createElement("input");
+
+    document.body.appendChild(tempInput);
+
+    tempInput.value = url;
+
+    tempInput.select();
+
+    document.execCommand("copy");
+
+    document.body.removeChild(tempInput);
 
 
-        navigator.clipboard.writeText(location.href);
+    // Exibe aviso visual na tela
 
-
-        alert("Link copiado!");
-
-
-    }else{
-
-
-        alert(location.href);
-
-
-    }
+    alert("Link copiado para a área de transferência:\n" + url);
 
 }
 
 </script>
 
+</body>
 
-</body></html>
+</html>
+
 
 

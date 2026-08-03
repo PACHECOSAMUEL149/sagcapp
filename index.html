@@ -15,34 +15,41 @@
 
 body{font-family:Arial,sans-serif;background:#eef2f7;margin:0}
 
-header{position:sticky;top:0;background:#128c7e;color:#fff;padding:14px;text-align:center;font-weight:bold}
+header{position:sticky;top:0;background:#128c7e;color:#fff;padding:14px;text-align:center;font-weight:bold;font-size:1.1em}
 
-#feed{max-width:360px;margin:12px auto}
+.container{max-width:480px;margin:12px auto;padding:0 12px}
 
-.card{background:#fff;border-radius:10px;padding:12px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.card-form{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-bottom:16px}
 
-img{display:block;margin:10px auto;max-width:280px;max-height:200px;width:auto;height:auto;border-radius:8px}
+.card-form h3{color:#128c7e;margin:0 0 14px}
 
-.actions{display:flex;gap:6px;margin-top:10px}
+.card-form input,.card-form textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;margin-bottom:10px;box-sizing:border-box}
 
-button{flex:1;padding:8px;border:1px solid #ccc;border-radius:5px;background:#f9f9f9;cursor:pointer}
+.card-form button{width:100%;padding:12px;background:#128c7e;color:#fff;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
 
-button.curtido{color:#e0245e;border-color:#e0245e;background:#ffebee}
+.card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-bottom:12px}
 
+.card .data{font-size:0.8em;color:#666}
 
-/* Estilo da caixa de comentários */
+.card h2{margin:8px 0;font-size:1.1em}
 
-.comments-section{display:none;margin-top:10px;padding-top:8px;border-top:1px dashed #ccc}
+img{width:100%;border-radius:8px;margin:10px 0}
 
-.comment-input-box{display:flex;gap:4px;margin-bottom:6px}
+.card p{margin:10px 0;font-size:0.9em}
 
-.comment-input-box input{flex:1;padding:6px;border:1px solid #ccc;border-radius:4px;font-size:0.8em}
+.actions{display:flex;gap:8px;margin-top:12px}
 
-.comment-input-box button{flex:0;padding:6px 10px;background:#128c7e;color:#fff;border:none;border-radius:4px}
+.actions button{flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;background:#fff;cursor:pointer;font-size:0.85em}
 
-.comment-list{font-size:0.8em;color:#333}
+.actions button.curtido{color:#e0245e;border-color:#e0245e}
 
-.comment-item{background:#f0f2f5;padding:5px 8px;border-radius:4px;margin-bottom:4px}
+.comments{margin-top:10px;border-top:1px solid #eee;padding-top:10px}
+
+.comments input{width:70%;padding:8px;border:1px solid #ddd;border-radius:20px}
+
+.comments button{padding:8px 12px;background:#128c7e;color:#fff;border:none;border-radius:20px;margin-left:4px}
+
+.comment{background:#f0f2f5;padding:6px 10px;border-radius:12px;margin-top:5px;font-size:0.85em}
 
 </style>
 
@@ -52,137 +59,210 @@ button.curtido{color:#e0245e;border-color:#e0245e;background:#ffebee}
 
 <header>SAGC</header>
 
-<div id="feed">
-
-<div class="card">
-
-<div>03/08/2026</div>
-
-<h2>Publicação SAGC</h2>
-
-<img src="foto1.jpg" onerror="this.style.display='none'">
-
-<p>Substitua este conteúdo pelo seu posts.json ou adapte conforme necessário.</p>
-
-<div class="actions">
-
-<button id="btn-like" onclick="curtir()">❤️ <span id="likes-count">0</span></button>
-
-<button onclick="toggleComentarios()">💬 Comentar</button>
-
-<button onclick="compartilhar()">📤 Compartilhar</button>
-
-</div>
+<div class="container">
 
 
-<!-- Área de comentários -->
+    <div class="card-form">
 
-<div class="comments-section" id="comments-box">
+        <h3>Nova Publicação</h3>
 
-<div class="comment-input-box">
+        <input type="text" id="titulo" placeholder="Título da publicação...">
 
-<input type="text" id="input-comment" placeholder="Escreva um comentário...">
+        <input type="text" id="imagem" placeholder="Nome da imagem na pasta (ex: foto1.jpg)">
 
-<button onclick="adicionarComentario()">Enviar</button>
+        <textarea id="conteudo" placeholder="Escreva o texto do post..." rows="3"></textarea>
 
-</div>
+        <button onclick="publicar()">Publicar</button>
 
-<div class="comment-list" id="comment-list"></div>
-
-</div>
+    </div>
 
 
-</div>
+    <div id="feed"></div>
 
 </div>
 
 
 <script>
 
-function curtir() {
+// Pega tudo do navegador
 
-    const btn = document.getElementById('btn-like');
+let posts = JSON.parse(localStorage.getItem('posts')) || [];
 
-    const count = document.getElementById('likes-count');
-
-    let total = parseInt(count.innerText);
+let dados = JSON.parse(localStorage.getItem('dados')) || {};
 
 
-    if (btn.classList.contains('curtido')) {
+// Se for a primeira vez, cria 1 post de exemplo
 
-        btn.classList.remove('curtido');
+if(posts.length === 0){
 
-        total--;
+    posts = [{
 
-    } else {
+        id: '1', data: "03/08/2026", titulo: "Publicação SAGC", 
 
-        btn.classList.add('curtido');
+        imagem: "foto1.jpg", conteudo: "Esta é a primeira publicação de teste do aplicativo!"
 
-        total++;
+    }];
 
-    }
+    salvar();
 
-    count.innerText = total;
+}
+
+mostrar();
+
+
+function salvar(){
+
+    localStorage.setItem('posts', JSON.stringify(posts));
+
+    localStorage.setItem('dados', JSON.stringify(dados));
 
 }
 
 
-function toggleComentarios() {
+function publicar(){
 
-    const box = document.getElementById('comments-box');
+    let t = document.getElementById('titulo').value;
 
-    box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    let i = document.getElementById('imagem').value;
 
-}
+    let c = document.getElementById('conteudo').value;
 
-
-function adicionarComentario() {
-
-    const input = document.getElementById('input-comment');
-
-    const list = document.getElementById('comment-list');
-
-    if (input.value.trim() === '') return;
-
-
-    const item = document.createElement('div');
-
-    item.className = 'comment-item';
-
-    item.innerText = input.value;
-
-
-    list.appendChild(item);
-
-    input.value = '';
-
-}
-
-
-function compartilhar() {
-
-    const url = window.location.href;
+    if(!t || !c){ alert('Preencha título e texto'); return; }
 
     
 
-    // Tenta copiar usando o método tradicional
+    let novo = {id: Date.now().toString(), data: new Date().toLocaleDateString('pt-BR'), titulo:t, imagem:i, conteudo:c};
 
-    const tempInput = document.createElement("input");
+    posts.unshift(novo);
 
-    document.body.appendChild(tempInput);
+    salvar();
 
-    tempInput.value = url;
+    document.getElementById('titulo').value = '';
 
-    tempInput.select();
+    document.getElementById('imagem').value = '';
 
-    document.execCommand("copy");
+    document.getElementById('conteudo').value = '';
 
-    document.body.removeChild(tempInput);
+    mostrar();
+
+}
 
 
-    // Exibe aviso visual na tela
+function mostrar(){
 
-    alert("Link copiado para a área de transferência:\n" + url);
+    let feed = document.getElementById('feed');
+
+    feed.innerHTML = '';
+
+    posts.forEach(post => {
+
+        if(!dados[post.id]) dados[post.id] = {likes:0, comentarios:[]};
+
+        
+
+        let html = `
+
+        <div class="card">
+
+            <div class="data">${post.data}</div>
+
+            <h2>${post.titulo}</h2>
+
+            ${post.imagem ? `<img src="${post.imagem}" onerror="this.style.display='none'">` : ''}
+
+            <p>${post.conteudo}</p>
+
+            <div class="actions">
+
+                <button class="${dados[post.id].curtiu ? 'curtido' : ''}" onclick="curtir('${post.id}')">❤️ ${dados[post.id].likes}</button>
+
+                <button onclick="document.getElementById('c${post.id}').style.display = document.getElementById('c${post.id}').style.display=='none'?'block':'none'">💬 Comentar</button>
+
+                <button onclick="compartilhar('${post.titulo}')">📤 Compartilhar</button>
+
+            </div>
+
+            <div class="comments" id="c${post.id}" style="display:none">
+
+                <input id="in${post.id}" placeholder="Escreva um comentário...">
+
+                <button onclick="comentar('${post.id}')">Enviar</button>
+
+                <div id="lista${post.id}"></div>
+
+            </div>
+
+        </div>`;
+
+        feed.innerHTML += html;
+
+        mostrarComentarios(post.id);
+
+    });
+
+}
+
+
+function curtir(id){
+
+    dados[id].curtiu = !dados[id].curtiu;
+
+    dados[id].likes += dados[id].curtiu ? 1 : -1;
+
+    salvar();
+
+    mostrar();
+
+}
+
+
+function comentar(id){
+
+    let txt = document.getElementById('in'+id).value;
+
+    if(!txt) return;
+
+    dados[id].comentarios.push(txt);
+
+    document.getElementById('in'+id).value = '';
+
+    salvar();
+
+    mostrarComentarios(id);
+
+}
+
+
+function mostrarComentarios(id){
+
+    let div = document.getElementById('lista'+id);
+
+    if(!div) return;
+
+    div.innerHTML = '';
+
+    dados[id].comentarios.forEach(c => {
+
+        div.innerHTML += `<div class="comment">${c}</div>`;
+
+    });
+
+}
+
+
+function compartilhar(titulo){
+
+    let url = window.location.href;
+
+    if(navigator.share){
+
+        navigator.share({title:'SAGC', text:titulo, url:url});
+
+    } else {
+
+        alert('Link: ' + url);
+
+    }
 
 }
 
@@ -191,6 +271,5 @@ function compartilhar() {
 </body>
 
 </html>
-
 
 

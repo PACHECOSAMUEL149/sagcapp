@@ -13,43 +13,66 @@
 
 <style>
 
-body {font-family: Arial; background:#e9ebee; margin:0;}
+* { box-sizing: border-box; }
 
-header {background:#009688; color:white; padding:15px; text-align:center; font-size:22px; font-weight:bold;}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #ebf0f5; margin: 0; padding-bottom: 30px; }
 
-.container {max-width:500px; margin:15px auto; padding:0 10px;}
 
-.card-form,.card {background:white; border-radius:8px; padding:15px; margin-bottom:15px; box-shadow:0 1px 2px rgba(0,0,0,.2);}
+header { background: #118a7e; color: white; padding: 16px; text-align: center; font-size: 20px; font-weight: bold; }
 
-.card-form h3 {color:#009688; margin-top:0;}
 
-input, textarea {width:100%; padding:10px; margin:8px 0; border:1px solid #ddd; border-radius:5px; box-sizing:border-box;}
+.container { max-width: 450px; margin: 20px auto; padding: 0 12px; }
 
-button {padding:10px; background:#009688; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold;}
 
-.btn-publicar {width:100%;}
+.card-form, .card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
 
-.card.data {font-size:12px; color:#65676b;}
 
-.card h2 {margin:10px 0 5px 0; font-size:18px;}
+.card-form h3 { color: #118a7e; margin: 0 0 15px 0; font-size: 18px; font-weight: bold; }
 
-.card img {width:100%; border-radius:5px; margin:10px 0;}
 
-.card p {margin:0 0 10px 0;}
+input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #e1e5eb; border-radius: 8px; font-size: 14px; outline: none; background: #fafbfc; }
 
-.botoes {display:flex; gap:8px;}
+input:focus, textarea:focus { border-color: #118a7e; background: #fff; }
 
-.botoes button {flex:1; background:#f2f3f5; color:#4b4c4f; border:1px solid #ddd;}
 
-.botoes button.curtido {color:#e0245e; border-color:#e0245e;}
+button.btn-publicar { width: 100%; padding: 12px; background: #118a7e; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; }
 
-.caixa-comentario {display:none; margin-top:10px; border-top:1px solid #eee; padding-top:10px;}
 
-.caixa-comentario input {width:70%; display:inline-block;}
+.card .data { font-size: 12px; color: #8e95a0; margin-bottom: 8px; }
 
-.caixa-comentario button {width:27%; display:inline-block;}
+.card h2 { margin: 0 0 12px 0; font-size: 18px; color: #000; font-weight: bold; }
 
-.comentario {background:#f2f3f5; padding:8px; border-radius:15px; margin-top:5px; font-size:14px;}
+.card img { width: 100%; border-radius: 12px; margin: 10px 0 15px 0; display: block; object-fit: cover; }
+
+.card p { margin: 0 0 18px 0; font-size: 15px; color: #222; line-height: 1.4; }
+
+
+/* BARRA DE BOTÕES ORGANIZADA */
+
+.botoes-container { display: flex; justify-content: space-between; gap: 8px; border-top: 1px solid #f0f2f5; padding-top: 12px; width: 100%; }
+
+
+.btn-acao { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f8f9fa; border: 1px solid #e2e6ea; border-radius: 8px; padding: 8px 4px; cursor: pointer; color: #333; font-size: 12px; font-weight: 600; min-width: 0; }
+
+.btn-acao:active { background: #e9ecef; }
+
+.btn-acao.curtido { color: #e0245e; border-color: #f8d7da; background: #fdf2f4; }
+
+
+.btn-acao .icone { font-size: 16px; margin-bottom: 2px; }
+
+
+/* CAIXA DE COMENTÁRIOS */
+
+.caixa-comentario { display: none; margin-top: 12px; border-top: 1px solid #eee; padding-top: 12px; }
+
+.caixa-input { display: flex; gap: 8px; }
+
+.caixa-input input { margin-bottom: 0; flex: 1; }
+
+.caixa-input button { background: #118a7e; color: white; border: none; border-radius: 8px; padding: 0 15px; font-weight: bold; cursor: pointer; }
+
+.comentario { background: #f1f3f5; padding: 8px 12px; border-radius: 10px; margin-top: 8px; font-size: 13px; color: #333; }
 
 </style>
 
@@ -57,35 +80,35 @@ button {padding:10px; background:#009688; color:white; border:none; border-radiu
 
 <body>
 
+
 <header>SAGC</header>
+
 
 <div class="container">
 
 
-<div class="card-form">
+  <div class="card-form">
 
-<h3>Nova Publicação</h3>
+    <h3>Nova Publicação</h3>
 
-<input type="text" id="titulo" placeholder="Título da publicação...">
+    <input type="text" id="titulo" placeholder="Título da publicação...">
 
-<input type="text" id="imagem" placeholder="Nome da imagem na pasta ex: foto1.jpg">
+    <input type="text" id="imagem" placeholder="Nome da imagem na pasta (ex: foto1.jpg)">
 
-<textarea id="conteudo" placeholder="Escreva o texto do post..." rows="3"></textarea>
+    <textarea id="conteudo" placeholder="Escreva o texto do post..." rows="3"></textarea>
 
-<button type="button" class="btn-publicar" onclick="publicar()">Publicar</button>
+    <button type="button" class="btn-publicar" onclick="publicar()">Publicar</button>
 
-</div>
+  </div>
 
 
-<div id="feed"></div>
+  <div id="feed"></div>
 
 
 </div>
 
 
 <script>
-
-// Carrega dados salvos no navegador
 
 let posts = JSON.parse(localStorage.getItem('posts_sagc')) || [];
 
@@ -95,8 +118,6 @@ let meustatusLikes = JSON.parse(localStorage.getItem('status_likes_sagc')) || {}
 
 let comentarios = JSON.parse(localStorage.getItem('com_sagc')) || {};
 
-
-// Post de exemplo inicial
 
 if(posts.length === 0){
 
@@ -191,15 +212,7 @@ function toggleComentarios(id){
 
   let caixa = document.getElementById('caixa-' + id);
 
-  if(caixa.style.display === 'block'){
-
-    caixa.style.display = 'none';
-
-  } else {
-
-    caixa.style.display = 'block';
-
-  }
+  caixa.style.display = (caixa.style.display === 'block') ? 'none' : 'block';
 
 }
 
@@ -221,19 +234,13 @@ function comentar(id){
 
   
 
-  // Adiciona o comentário na tela na hora
-
   let lista = document.getElementById('lista-comentarios-' + id);
 
   lista.innerHTML += `<div class="comentario">${txt}</div>`;
 
   
 
-  // Atualiza o contador do botão
-
-  document.getElementById('btn-coment-' + id).innerText = `💬 Comentar (${comentarios[id].length})`;
-
-  
+  document.getElementById('txt-coment-' + id).innerText = `Comentar (${comentarios[id].length})`;
 
   input.value = '';
 
@@ -250,8 +257,6 @@ function compartilhar(id){
   let textoParaCopiar = `${p.titulo}\n${p.conteudo}`;
 
 
-  // Tenta compartilhar pelo menu nativo se estiver rodando via HTTPS
-
   if (navigator.share && window.location.protocol.startsWith('https')) {
 
     navigator.share({
@@ -266,23 +271,21 @@ function compartilhar(id){
 
   } else {
 
-    // Se estiver no arquivo local ou sem HTTPS, copia o texto ou exibe a caixinha
-
     if (navigator.clipboard && navigator.clipboard.writeText) {
 
       navigator.clipboard.writeText(textoParaCopiar).then(() => {
 
-        alert('Texto do post copiado! Agora é só colar onde quiser.');
+        alert('Texto copiado com sucesso!');
 
       }).catch(() => {
 
-        prompt('Copie o texto abaixo para compartilhar:', textoParaCopiar);
+        prompt('Copie o texto do post abaixo:', textoParaCopiar);
 
       });
 
     } else {
 
-      prompt('Copie o texto abaixo para compartilhar:', textoParaCopiar);
+      prompt('Copie o texto do post abaixo:', textoParaCopiar);
 
     }
 
@@ -334,23 +337,33 @@ function mostrar(){
       <p>${p.conteudo}</p>
 
 
-      <div class="botoes">
+      <div class="botoes-container">
 
-        <button type="button" class="${classeCurtido}" onclick="curtir(${p.id})">
+        <button type="button" class="btn-acao ${classeCurtido}" onclick="curtir(${p.id})">
 
-          ♥ Curtir (${qtdLikes})
+          <span class="icone">${meustatusLikes[p.id] ? '❤️' : '🤍'}</span>
 
-        </button>
-
-        <button type="button" id="btn-coment-${p.id}" onclick="toggleComentarios(${p.id})">
-
-          💬 Comentar (${qtdComentarios})
+          <span>${qtdLikes}</span>
 
         </button>
 
-        <button type="button" onclick="compartilhar(${p.id})">
+        
 
-          🔗 Compartilhar
+        <button type="button" class="btn-acao" onclick="toggleComentarios(${p.id})">
+
+          <span class="icone">💬</span>
+
+          <span id="txt-coment-${p.id}">Comentar (${qtdComentarios})</span>
+
+        </button>
+
+        
+
+        <button type="button" class="btn-acao" onclick="compartilhar(${p.id})">
+
+          <span class="icone">📤</span>
+
+          <span>Compartilhar</span>
 
         </button>
 
@@ -359,9 +372,13 @@ function mostrar(){
 
       <div class="caixa-comentario" id="caixa-${p.id}">
 
-        <input type="text" id="input-comentario-${p.id}" placeholder="Escreva um comentário...">
+        <div class="caixa-input">
 
-        <button type="button" onclick="comentar(${p.id})">Enviar</button>
+          <input type="text" id="input-comentario-${p.id}" placeholder="Escreva um comentário...">
+
+          <button type="button" onclick="comentar(${p.id})">Enviar</button>
+
+        </div>
 
         <div id="lista-comentarios-${p.id}">${comsHtml}</div>
 

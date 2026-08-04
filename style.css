@@ -1,0 +1,294 @@
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+body{
+
+    background:#eef2f7;
+
+    color:#222;
+
+    padding-bottom:80px;
+
+}
+
+
+.topo{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:65px;
+
+    background:#0b6b39;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 15px;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.2);
+
+    z-index:1000;
+
+}
+
+
+.logo{
+
+    color:#fff;
+
+    font-size:26px;
+
+    font-weight:700;
+
+}
+
+
+.pesquisa{
+
+    width:45%;
+
+    height:38px;
+
+    border:none;
+
+    border-radius:20px;
+
+    padding:0 15px;
+
+    outline:none;
+
+}
+
+
+.perfil img{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+
+main{
+
+    max-width:700px;
+
+    margin:80px auto 20px;
+
+    padding:12px;
+
+}
+
+
+.nova-publicacao{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+    margin-bottom:20px;
+
+}
+
+
+.nova-publicacao h2{
+
+    color:#0b6b39;
+
+    margin-bottom:15px;
+
+}
+
+
+.nova-publicacao input,
+
+.nova-publicacao textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+}
+
+
+.nova-publicacao textarea{
+
+    height:110px;
+
+    resize:none;
+
+}
+
+
+#publicar{
+
+    width:100%;
+
+    height:45px;
+
+    background:#0b6b39;
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+#publicar:hover{
+
+    background:#0f8046;
+
+}
+
+
+.post{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    margin-bottom:20px;
+
+    overflow:hidden;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+
+.post img{
+
+    width:100%;
+
+    display:block;
+
+}
+
+
+.post-conteudo{
+
+    padding:15px;
+
+}
+
+
+.post h3{
+
+    color:#0b6b39;
+
+    margin-bottom:8px;
+
+}
+
+
+.acoes{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    border-top:1px solid #eee;
+
+    padding:12px;
+
+}
+
+
+.acoes button{
+
+    background:none;
+
+    border:none;
+
+    color:#0b6b39;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+}
+
+
+.menu{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    height:65px;
+
+    background:#fff;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    box-shadow:0 -2px 10px rgba(0,0,0,.15);
+
+}
+
+
+.menu button{
+
+    border:none;
+
+    background:none;
+
+    color:#0b6b39;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+

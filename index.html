@@ -7,49 +7,49 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>SAGC</title>
 
 <style>
 
-body{font-family:Arial,sans-serif;background:#eef2f7;margin:0}
+body {font-family: Arial; background:#e9ebee; margin:0;}
 
-header{position:sticky;top:0;background:#128c7e;color:#fff;padding:14px;text-align:center;font-weight:bold;font-size:1.1em}
+header {background:#009688; color:white; padding:15px; text-align:center; font-size:22px; font-weight:bold;}
 
-.container{max-width:480px;margin:12px auto;padding:0 12px}
+.container {max-width:500px; margin:15px auto; padding:0 10px;}
 
-.card-form{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-bottom:16px}
+.card-form,.card {background:white; border-radius:8px; padding:15px; margin-bottom:15px; box-shadow:0 1px 2px rgba(0,0,0,.2);}
 
-.card-form h3{color:#128c7e;margin:0 0 14px}
+.card-form h3 {color:#009688; margin-top:0;}
 
-.card-form input,.card-form textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;margin-bottom:10px;box-sizing:border-box}
+input, textarea {width:100%; padding:10px; margin:8px 0; border:1px solid #ddd; border-radius:5px; box-sizing:border-box;}
 
-.card-form button{width:100%;padding:12px;background:#128c7e;color:#fff;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
+button {padding:10px; background:#009688; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold;}
 
-.card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-bottom:12px}
+.btn-publicar {width:100%;}
 
-.card .data{font-size:0.8em;color:#666}
+.card.data {font-size:12px; color:#65676b;}
 
-.card h2{margin:8px 0;font-size:1.1em}
+.card h2 {margin:10px 0 5px 0; font-size:18px;}
 
-img{width:100%;border-radius:8px;margin:10px 0}
+.card img {width:100%; border-radius:5px; margin:10px 0;}
 
-.card p{margin:10px 0;font-size:0.9em}
+.card p {margin:0 0 10px 0;}
 
-.actions{display:flex;gap:8px;margin-top:12px}
+.botoes {display:flex; gap:8px;}
 
-.actions button{flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;background:#fff;cursor:pointer;font-size:0.85em}
+.botoes button {flex:1; background:#f2f3f5; color:#4b4c4f; border:1px solid #ddd;}
 
-.actions button.curtido{color:#e0245e;border-color:#e0245e}
+.botoes button.curtido {color:#e0245e; border-color:#e0245e;}
 
-.comments{margin-top:10px;border-top:1px solid #eee;padding-top:10px}
+.caixa-comentario {display:none; margin-top:10px; border-top:1px solid #eee; padding-top:10px;}
 
-.comments input{width:70%;padding:8px;border:1px solid #ddd;border-radius:20px}
+.caixa-comentario input {width:70%; display:inline-block;}
 
-.comments button{padding:8px 12px;background:#128c7e;color:#fff;border:none;border-radius:20px;margin-left:4px}
+.caixa-comentario button {width:27%; display:inline-block;}
 
-.comment{background:#f0f2f5;padding:6px 10px;border-radius:12px;margin-top:5px;font-size:0.85em}
+.comentario {background:#f2f3f5; padding:8px; border-radius:15px; margin-top:5px; font-size:14px;}
 
 </style>
 
@@ -62,207 +62,314 @@ img{width:100%;border-radius:8px;margin:10px 0}
 <div class="container">
 
 
-    <div class="card-form">
+<div class="card-form">
 
-        <h3>Nova Publicação</h3>
+<h3>Nova Publicação</h3>
 
-        <input type="text" id="titulo" placeholder="Título da publicação...">
+<input type="text" id="titulo" placeholder="Título da publicação...">
 
-        <input type="text" id="imagem" placeholder="Nome da imagem na pasta (ex: foto1.jpg)">
+<input type="text" id="imagem" placeholder="Nome da imagem na pasta ex: foto1.jpg">
 
-        <textarea id="conteudo" placeholder="Escreva o texto do post..." rows="3"></textarea>
+<textarea id="conteudo" placeholder="Escreva o texto do post..." rows="3"></textarea>
 
-        <button onclick="publicar()">Publicar</button>
+<button type="button" class="btn-publicar" onclick="publicar()">Publicar</button>
 
-    </div>
+</div>
 
 
-    <div id="feed"></div>
+<div id="feed"></div>
+
 
 </div>
 
 
 <script>
 
-// Pega tudo do navegador
+// Carrega dados salvos no navegador
 
-let posts = JSON.parse(localStorage.getItem('posts')) || [];
+let posts = JSON.parse(localStorage.getItem('posts_sagc')) || [];
 
-let dados = JSON.parse(localStorage.getItem('dados')) || {};
+let likes = JSON.parse(localStorage.getItem('likes_sagc')) || {};
+
+let meustatusLikes = JSON.parse(localStorage.getItem('status_likes_sagc')) || {};
+
+let comentarios = JSON.parse(localStorage.getItem('com_sagc')) || {};
 
 
-// Se for a primeira vez, cria 1 post de exemplo
+// Post de exemplo inicial
 
 if(posts.length === 0){
 
-    posts = [{
+  posts.push({id: 1, data: '03/08/2026', titulo: 'Publicação SAGC', imagem: 'foto1.jpg', conteudo: 'Esta é a primeira publicação de teste do aplicativo!'});
 
-        id: '1', data: "03/08/2026", titulo: "Publicação SAGC", 
+  likes[1] = 0;
 
-        imagem: "foto1.jpg", conteudo: "Esta é a primeira publicação de teste do aplicativo!"
+  meustatusLikes[1] = false;
 
-    }];
+  comentarios[1] = [];
 
-    salvar();
+  salvar();
 
 }
+
 
 mostrar();
 
 
 function salvar(){
 
-    localStorage.setItem('posts', JSON.stringify(posts));
+  localStorage.setItem('posts_sagc', JSON.stringify(posts));
 
-    localStorage.setItem('dados', JSON.stringify(dados));
+  localStorage.setItem('likes_sagc', JSON.stringify(likes));
+
+  localStorage.setItem('status_likes_sagc', JSON.stringify(meustatusLikes));
+
+  localStorage.setItem('com_sagc', JSON.stringify(comentarios));
 
 }
 
 
 function publicar(){
 
-    let t = document.getElementById('titulo').value;
+  let t = document.getElementById('titulo').value;
 
-    let i = document.getElementById('imagem').value;
+  let i = document.getElementById('imagem').value;
 
-    let c = document.getElementById('conteudo').value;
+  let c = document.getElementById('conteudo').value;
 
-    if(!t || !c){ alert('Preencha título e texto'); return; }
-
-    
-
-    let novo = {id: Date.now().toString(), data: new Date().toLocaleDateString('pt-BR'), titulo:t, imagem:i, conteudo:c};
-
-    posts.unshift(novo);
-
-    salvar();
-
-    document.getElementById('titulo').value = '';
-
-    document.getElementById('imagem').value = '';
-
-    document.getElementById('conteudo').value = '';
-
-    mostrar();
-
-}
+  if(t === '' || c === ''){ alert('Preencha título e texto'); return; }
 
 
-function mostrar(){
+  let id = Date.now();
 
-    let feed = document.getElementById('feed');
+  posts.unshift({id: id, data: new Date().toLocaleDateString('pt-BR'), titulo: t, imagem: i, conteudo: c});
 
-    feed.innerHTML = '';
+  likes[id] = 0;
 
-    posts.forEach(post => {
+  meustatusLikes[id] = false;
 
-        if(!dados[post.id]) dados[post.id] = {likes:0, comentarios:[]};
+  comentarios[id] = [];
 
-        
+  salvar();
 
-        let html = `
 
-        <div class="card">
+  document.getElementById('titulo').value = '';
 
-            <div class="data">${post.data}</div>
+  document.getElementById('imagem').value = '';
 
-            <h2>${post.titulo}</h2>
+  document.getElementById('conteudo').value = '';
 
-            ${post.imagem ? `<img src="${post.imagem}" onerror="this.style.display='none'">` : ''}
-
-            <p>${post.conteudo}</p>
-
-            <div class="actions">
-
-                <button class="${dados[post.id].curtiu ? 'curtido' : ''}" onclick="curtir('${post.id}')">❤️ ${dados[post.id].likes}</button>
-
-                <button onclick="document.getElementById('c${post.id}').style.display = document.getElementById('c${post.id}').style.display=='none'?'block':'none'">💬 Comentar</button>
-
-                <button onclick="compartilhar('${post.titulo}')">📤 Compartilhar</button>
-
-            </div>
-
-            <div class="comments" id="c${post.id}" style="display:none">
-
-                <input id="in${post.id}" placeholder="Escreva um comentário...">
-
-                <button onclick="comentar('${post.id}')">Enviar</button>
-
-                <div id="lista${post.id}"></div>
-
-            </div>
-
-        </div>`;
-
-        feed.innerHTML += html;
-
-        mostrarComentarios(post.id);
-
-    });
+  mostrar();
 
 }
 
 
 function curtir(id){
 
-    dados[id].curtiu = !dados[id].curtiu;
+  if(meustatusLikes[id]){
 
-    dados[id].likes += dados[id].curtiu ? 1 : -1;
+    likes[id] = Math.max(0, (likes[id] || 1) - 1);
 
-    salvar();
+    meustatusLikes[id] = false;
 
-    mostrar();
+  } else {
+
+    likes[id] = (likes[id] || 0) + 1;
+
+    meustatusLikes[id] = true;
+
+  }
+
+  salvar();
+
+  mostrar();
+
+}
+
+
+function toggleComentarios(id){
+
+  let caixa = document.getElementById('caixa-' + id);
+
+  if(caixa.style.display === 'block'){
+
+    caixa.style.display = 'none';
+
+  } else {
+
+    caixa.style.display = 'block';
+
+  }
 
 }
 
 
 function comentar(id){
 
-    let txt = document.getElementById('in'+id).value;
+  let input = document.getElementById('input-comentario-' + id);
 
-    if(!txt) return;
+  let txt = input.value.trim();
 
-    dados[id].comentarios.push(txt);
+  if(txt === '') return;
 
-    document.getElementById('in'+id).value = '';
 
-    salvar();
+  if(!comentarios[id]) comentarios[id] = [];
 
-    mostrarComentarios(id);
+  comentarios[id].push(txt);
+
+  salvar();
+
+  
+
+  // Adiciona o comentário na tela na hora
+
+  let lista = document.getElementById('lista-comentarios-' + id);
+
+  lista.innerHTML += `<div class="comentario">${txt}</div>`;
+
+  
+
+  // Atualiza o contador do botão
+
+  document.getElementById('btn-coment-' + id).innerText = `💬 Comentar (${comentarios[id].length})`;
+
+  
+
+  input.value = '';
 
 }
 
 
-function mostrarComentarios(id){
+function compartilhar(id){
 
-    let div = document.getElementById('lista'+id);
+  let p = posts.find(item => item.id === id);
 
-    if(!div) return;
-
-    div.innerHTML = '';
-
-    dados[id].comentarios.forEach(c => {
-
-        div.innerHTML += `<div class="comment">${c}</div>`;
-
-    });
-
-}
+  if(!p) return;
 
 
-function compartilhar(titulo){
+  let textoParaCopiar = `${p.titulo}\n${p.conteudo}`;
 
-    let url = window.location.href;
 
-    if(navigator.share){
+  // Tenta compartilhar pelo menu nativo se estiver rodando via HTTPS
 
-        navigator.share({title:'SAGC', text:titulo, url:url});
+  if (navigator.share && window.location.protocol.startsWith('https')) {
+
+    navigator.share({
+
+      title: p.titulo,
+
+      text: textoParaCopiar,
+
+      url: window.location.href
+
+    }).catch(() => {});
+
+  } else {
+
+    // Se estiver no arquivo local ou sem HTTPS, copia o texto ou exibe a caixinha
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+
+      navigator.clipboard.writeText(textoParaCopiar).then(() => {
+
+        alert('Texto do post copiado! Agora é só colar onde quiser.');
+
+      }).catch(() => {
+
+        prompt('Copie o texto abaixo para compartilhar:', textoParaCopiar);
+
+      });
 
     } else {
 
-        alert('Link: ' + url);
+      prompt('Copie o texto abaixo para compartilhar:', textoParaCopiar);
 
     }
+
+  }
+
+}
+
+
+function mostrar(){
+
+  let feed = document.getElementById('feed');
+
+  feed.innerHTML = '';
+
+  
+
+  posts.forEach(p => {
+
+    let comsHtml = '';
+
+    if(comentarios[p.id]){
+
+      comentarios[p.id].forEach(com => {
+
+        comsHtml += `<div class="comentario">${com}</div>`;
+
+      });
+
+    }
+
+
+    let qtdLikes = likes[p.id] || 0;
+
+    let classeCurtido = meustatusLikes[p.id] ? 'curtido' : '';
+
+    let qtdComentarios = comentarios[p.id] ? comentarios[p.id].length : 0;
+
+
+    feed.innerHTML += `
+
+    <div class="card">
+
+      <div class="data">${p.data}</div>
+
+      <h2>${p.titulo}</h2>
+
+      ${p.imagem ? `<img src="${p.imagem}" onerror="this.style.display='none'">` : ''}
+
+      <p>${p.conteudo}</p>
+
+
+      <div class="botoes">
+
+        <button type="button" class="${classeCurtido}" onclick="curtir(${p.id})">
+
+          ♥ Curtir (${qtdLikes})
+
+        </button>
+
+        <button type="button" id="btn-coment-${p.id}" onclick="toggleComentarios(${p.id})">
+
+          💬 Comentar (${qtdComentarios})
+
+        </button>
+
+        <button type="button" onclick="compartilhar(${p.id})">
+
+          🔗 Compartilhar
+
+        </button>
+
+      </div>
+
+
+      <div class="caixa-comentario" id="caixa-${p.id}">
+
+        <input type="text" id="input-comentario-${p.id}" placeholder="Escreva um comentário...">
+
+        <button type="button" onclick="comentar(${p.id})">Enviar</button>
+
+        <div id="lista-comentarios-${p.id}">${comsHtml}</div>
+
+      </div>
+
+    </div>`;
+
+  });
 
 }
 
@@ -271,5 +378,6 @@ function compartilhar(titulo){
 </body>
 
 </html>
+
 
 

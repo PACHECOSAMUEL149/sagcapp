@@ -15,64 +15,98 @@
 
 * { box-sizing: border-box; }
 
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #ebf0f5; margin: 0; padding-bottom: 30px; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial; background: #ebf0f5; margin: 0; padding-bottom: 30px; }
 
 
 header { background: #118a7e; color: white; padding: 16px; text-align: center; font-size: 20px; font-weight: bold; }
 
 
+.menu { display: flex; justify-content: center; gap: 4px; background: #118a7e; padding: 0 8px 12px; overflow-x: auto; }
+
+.menu button { background: rgba(255,255,255,0.18); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 8px 10px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+
+.menu button.ativo { background: white; color: #118a7e; }
+
+.menu button.btn-admin-menu { background: rgba(0,0,0,0.25); }
+
+
 .container { max-width: 450px; margin: 20px auto; padding: 0 12px; }
 
+.pagina { display: none; }
 
-.card-form, .card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-
-
-.card-form h3 { color: #118a7e; margin: 0 0 15px 0; font-size: 18px; font-weight: bold; }
+.pagina.ativa { display: block; }
 
 
-input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #e1e5eb; border-radius: 8px; font-size: 14px; outline: none; background: #fafbfc; }
+.card-form,.card,.produto,.servico,.sobre { background: white; border-radius: 12px; padding: 18px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
 
-input:focus, textarea:focus { border-color: #118a7e; background: #fff; }
 
+/* ESTILO DO PAINEL ADMIN */
+
+.card-form { border: 2px solid #118a7e; }
+
+.card-form h3 { color: #118a7e; margin: 0 0 12px 0; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+
+
+.abas-admin { display: flex; gap: 6px; margin-bottom: 12px; }
+
+.abas-admin button { flex: 1; padding: 6px; border: 1px solid #118a7e; background: #f0fdfa; color: #118a7e; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
+
+.abas-admin button.ativa { background: #118a7e; color: white; }
+
+
+.titulo-pagina { color: #118a7e; margin: 0 0 15px 0; font-size: 20px; font-weight: bold; }
+
+
+input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #e1e5eb; border-radius: 8px; font-size: 14px; background: #fafbfc; }
 
 button.btn-publicar { width: 100%; padding: 12px; background: #118a7e; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; }
 
 
+/* FEED POSTS */
+
 .card .data { font-size: 12px; color: #8e95a0; margin-bottom: 8px; }
 
-.card h2 { margin: 0 0 12px 0; font-size: 18px; color: #000; font-weight: bold; }
+.card h2 { margin: 0 0 12px 0; font-size: 18px; color: #000; }
 
-.card img { width: 100%; border-radius: 12px; margin: 10px 0 15px 0; display: block; object-fit: cover; }
+.card img { width: 100%; border-radius: 12px; margin: 10px 0; }
 
-.card p { margin: 0 0 18px 0; font-size: 15px; color: #222; line-height: 1.4; }
-
-
-/* BARRA DE BOTÕES ORGANIZADA */
-
-.botoes-container { display: flex; justify-content: space-between; gap: 8px; border-top: 1px solid #f0f2f5; padding-top: 12px; width: 100%; }
+.card p { margin: 0 0 18px 0; font-size: 15px; color: #222; white-space: pre-wrap; }
 
 
-.btn-acao { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f8f9fa; border: 1px solid #e2e6ea; border-radius: 8px; padding: 8px 4px; cursor: pointer; color: #333; font-size: 12px; font-weight: 600; min-width: 0; }
+/* PRODUTOS */
 
-.btn-acao:active { background: #e9ecef; }
+.produto img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
 
-.btn-acao.curtido { color: #e0245e; border-color: #f8d7da; background: #fdf2f4; }
+.produto h3 { margin: 0 0 6px 0; font-size: 16px; color: #118a7e; }
+
+.produto p { margin: 0 0 10px 0; font-size: 13px; color: #444; }
+
+.produto .preco { color: #118a7e; font-size: 18px; font-weight: bold; margin-bottom: 12px; }
 
 
-.btn-acao .icone { font-size: 16px; margin-bottom: 2px; }
+.botoes-container { display: flex; gap: 6px; border-top: 1px solid #f0f2f5; padding-top: 12px; }
 
+.btn-acao { flex: 1; padding: 8px 4px; background: #f8f9fa; border: 1px solid #e2e6ea; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 4px; }
 
-/* CAIXA DE COMENTÁRIOS */
+.btn-whatsapp { color: #128c7e; background: #e8f5e9; border-color: #c8e6c9; }
+
 
 .caixa-comentario { display: none; margin-top: 12px; border-top: 1px solid #eee; padding-top: 12px; }
 
 .caixa-input { display: flex; gap: 8px; }
 
-.caixa-input input { margin-bottom: 0; flex: 1; }
+.caixa-input button { background: #118a7e; color: white; border: none; border-radius: 8px; padding: 0 15px; font-weight: bold; }
 
-.caixa-input button { background: #118a7e; color: white; border: none; border-radius: 8px; padding: 0 15px; font-weight: bold; cursor: pointer; }
+.comentario { background: #f1f3f5; padding: 8px 12px; border-radius: 10px; margin-top: 8px; font-size: 13px; }
 
-.comentario { background: #f1f3f5; padding: 8px 12px; border-radius: 10px; margin-top: 8px; font-size: 13px; color: #333; }
+
+.btn-contato { display: block; text-align: center; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; margin-bottom: 10px; }
+
+.btn-contato.whats { background: #25D366; color: white; }
+
+.btn-contato.fone { background: #118a7e; color: white; }
+
+.btn-contato.mail { background: #6c757d; color: white; }
 
 </style>
 
@@ -84,247 +118,342 @@ button.btn-publicar { width: 100%; padding: 12px; background: #118a7e; color: wh
 <header>SAGC</header>
 
 
+<div class="menu">
+
+  <button class="ativo" onclick="abrir('inicio', this)">🏠 Início</button>
+
+  <button onclick="abrir('produtos', this)">🛒 Produtos</button>
+
+  <button onclick="abrir('servicos', this)">🔧 Serviços</button>
+
+  <button onclick="abrir('contato', this)">📞 Contato</button>
+
+  <button onclick="abrir('sobre', this)">ℹ️ Sobre</button>
+
+  <button class="btn-admin-menu" onclick="autenticarAdmin()">🔒 Admin</button>
+
+</div>
+
+
 <div class="container">
 
+  
 
-  <div class="card-form">
+  <!-- PAINEL ADMIN COM DUAS ABAS (FICA OCULTO POR PADRÃO) -->
 
-    <h3>Nova Publicação</h3>
+  <div class="card-form" id="boxAdmin" style="display: none;">
 
-    <input type="text" id="titulo" placeholder="Título da publicação...">
+    <h3>
 
-    <input type="text" id="imagem" placeholder="Nome da imagem na pasta (ex: foto1.jpg)">
+      Painel Administrativo
 
-    <textarea id="conteudo" placeholder="Escreva o texto do post..." rows="3"></textarea>
+      <button onclick="sairAdmin()" style="background:#e74c3c; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;">Sair</button>
 
-    <button type="button" class="btn-publicar" onclick="publicar()">Publicar</button>
+    </h3>
+
+    
+
+    <div class="abas-admin">
+
+      <button id="tabPost" class="ativa" onclick="mudarFormAdmin('post')">📝 Nova Publicação</button>
+
+      <button id="tabProd" onclick="mudarFormAdmin('prod')">🛒 Novo Produto</button>
+
+    </div>
+
+
+    <!-- FORMULÁRIO 1: POST DO FEED -->
+
+    <div id="formPost">
+
+      <input type="text" id="tituloPost" placeholder="Título da publicação...">
+
+      <input type="text" id="imagemPost" placeholder="Nome da imagem na pasta (ex: foto1.jpg)">
+
+      <textarea id="conteudoPost" placeholder="Escreva o texto do post..." rows="3"></textarea>
+
+      <button class="btn-publicar" onclick="publicarPost()">Publicar Post</button>
+
+    </div>
+
+
+    <!-- FORMULÁRIO 2: NOVO PRODUTO -->
+
+    <div id="formProd" style="display: none;">
+
+      <input type="text" id="nomeProd" placeholder="Nome do Produto...">
+
+      <input type="text" id="precoProd" placeholder="Preço (ex: 150,00)">
+
+      <input type="text" id="imagemProd" placeholder="Nome da imagem (ex: produto1.jpg)">
+
+      <textarea id="descProd" placeholder="Descrição do produto..." rows="2"></textarea>
+
+      <button class="btn-publicar" onclick="cadastrarProduto()">Cadastrar Produto</button>
+
+    </div>
 
   </div>
 
 
-  <div id="feed"></div>
+  <section id="inicio" class="pagina ativa">
 
+    <div id="feed"></div>
+
+  </section>
+
+
+  <section id="produtos" class="pagina">
+
+    <div class="card"><h2 class="titulo-pagina">🛒 Produtos</h2><p>Confira nossos produtos disponíveis:</p></div>
+
+    <div id="listaProdutos"></div>
+
+  </section>
+
+
+  <section id="servicos" class="pagina">
+
+    <div class="card"><h2 class="titulo-pagina">🔧 Serviços</h2></div>
+
+    <div class="servico">
+
+      <h3>⚡ Instalação Elétrica</h3>
+
+      <p>Serviços elétricos residenciais e comerciais.</p>
+
+      <a href="https://wa.me/5538999998888?text=Olá!%20Gostaria%20de%20um%20orçamento%20de%20instalação%20elétrica." target="_blank" style="display:inline-block; margin-top:8px; background:#118a7e; color:white; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:bold;">
+
+        💬 Pedir Orçamento
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <section id="contato" class="pagina">
+
+    <div class="card">
+
+      <h2 class="titulo-pagina">📞 Fale Conosco</h2>
+
+      <p>Clique abaixo para entrar em contato diretamente:</p>
+
+      <a href="https://wa.me/5538984191501?text=Olá!%20Vim%20pelo%20aplicativo%20SAGC." target="_blank" class="btn-contato whats">💬 Chamar no WhatsApp</a>
+
+      <a href="tel:5538984191501" class="btn-contato fone">📞 Ligar Agora</a>
+
+      <a href="mailto:pachecosamuel23@gmail.com.com" class="btn-contato mail">✉️ Enviar E-mail</a>
+
+    </div>
+
+  </section>
+
+
+  <section id="sobre" class="pagina">
+
+    <div class="sobre"><h2 class="titulo-pagina">ℹ️ Sobre</h2><h3>SAGC</h3><p>Reúne notícias, produtos e serviços.</p></div>
+
+  </section>
 
 </div>
 
 
 <script>
 
-let posts = JSON.parse(localStorage.getItem('posts_sagc')) || [];
+let SENHA_ADMIN = "8113"; // SUA SENHA AQUI
 
-let likes = JSON.parse(localStorage.getItem('likes_sagc')) || {};
-
-let meustatusLikes = JSON.parse(localStorage.getItem('status_likes_sagc')) || {};
-
-let comentarios = JSON.parse(localStorage.getItem('com_sagc')) || {};
+let TELEFONE_WHATS = "5538984191501"; // SEU NÚMERO COM DDD
 
 
-if(posts.length === 0){
+let dados = { posts: [], produtos: [] };
 
-  posts.push({id: 1, data: '03/08/2026', titulo: 'Publicação SAGC', imagem: 'foto1.jpg', conteudo: 'Esta é a primeira publicação de teste do aplicativo!'});
 
-  likes[1] = 0;
+try {
 
-  meustatusLikes[1] = false;
+  dados = JSON.parse(localStorage.getItem('sagc_v3')) || dados;
 
-  comentarios[1] = [];
+} catch(e) {
 
-  salvar();
+  console.log("Resetando dados");
 
 }
 
 
-mostrar();
+if(!dados.posts || dados.posts.length == 0){
+
+  dados.posts = [{id:1, data:'08/08/2026', titulo:'Bem vindo ao SAGC', imagem:'', conteudo:'Agora sim está funcionando!', likes:0, coms:[]}];
+
+}
+
+
+if(!dados.produtos){
+
+  dados.produtos = [];
+
+}
 
 
 function salvar(){
 
-  localStorage.setItem('posts_sagc', JSON.stringify(posts));
-
-  localStorage.setItem('likes_sagc', JSON.stringify(likes));
-
-  localStorage.setItem('status_likes_sagc', JSON.stringify(meustatusLikes));
-
-  localStorage.setItem('com_sagc', JSON.stringify(comentarios));
+  localStorage.setItem('sagc_v3', JSON.stringify(dados));
 
 }
 
 
-function publicar(){
+function autenticarAdmin(){
 
-  let t = document.getElementById('titulo').value;
+  let box = document.getElementById('boxAdmin');
 
-  let i = document.getElementById('imagem').value;
+  if(box.style.display === 'block'){
 
-  let c = document.getElementById('conteudo').value;
+    alert('Você já está no modo Admin.');
 
-  if(t === '' || c === ''){ alert('Preencha título e texto'); return; }
+    return;
+
+  }
+
+  
+
+  let senha = prompt('Digite a senha de Administrador:');
+
+  if(senha === SENHA_ADMIN){
+
+    box.style.display = 'block';
+
+  } else if(senha !== null) {
+
+    alert('Senha incorreta!');
+
+  }
+
+}
 
 
-  let id = Date.now();
+function sairAdmin(){
 
-  posts.unshift({id: id, data: new Date().toLocaleDateString('pt-BR'), titulo: t, imagem: i, conteudo: c});
+  document.getElementById('boxAdmin').style.display = 'none';
 
-  likes[id] = 0;
-
-  meustatusLikes[id] = false;
-
-  comentarios[id] = [];
-
-  salvar();
+}
 
 
-  document.getElementById('titulo').value = '';
+function mudarFormAdmin(tipo){
 
-  document.getElementById('imagem').value = '';
+  if(tipo === 'post'){
 
-  document.getElementById('conteudo').value = '';
+    tabPost.classList.add('ativa'); tabProd.classList.remove('ativa');
 
-  mostrar();
+    formPost.style.display = 'block'; formProd.style.display = 'none';
+
+  } else {
+
+    tabProd.classList.add('ativa'); tabPost.classList.remove('ativa');
+
+    formProd.style.display = 'block'; formPost.style.display = 'none';
+
+  }
+
+}
+
+
+function abrir(n,b){
+
+  document.querySelectorAll('.pagina').forEach(p=>p.classList.remove('ativa'));
+
+  document.getElementById(n).classList.add('ativa');
+
+  document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('ativo'));
+
+  if(b) b.classList.add('ativo');
+
+}
+
+
+function publicarPost(){
+
+  let t=tituloPost.value.trim(), i=imagemPost.value.trim(), c=conteudoPost.value.trim();
+
+  if(!t||!c) return alert('Preencha título e texto');
+
+  dados.posts.unshift({id:Date.now(), data:new Date().toLocaleDateString('pt-BR'), titulo:t, imagem:i, conteudo:c, likes:0, coms:[]});
+
+  salvar(); tituloPost.value=imagemPost.value=conteudoPost.value='';
+
+  mostrar(); sairAdmin();
+
+}
+
+
+function cadastrarProduto(){
+
+  let n=nomeProd.value.trim(), p=precoProd.value.trim(), i=imagemProd.value.trim(), d=descProd.value.trim();
+
+  if(!n||!p) return alert('Preencha nome e preço do produto');
+
+  dados.produtos.unshift({id:Date.now(), nome:n, preco:p, imagem:i, desc:d});
+
+  salvar(); nomeProd.value=precoProd.value=imagemProd.value=descProd.value='';
+
+  mostrar(); sairAdmin(); abrir('produtos', document.querySelectorAll('.menu button')[1]);
 
 }
 
 
 function curtir(id){
 
-  if(meustatusLikes[id]){
+  let p = dados.posts.find(x=>x.id==id);
 
-    likes[id] = Math.max(0, (likes[id] || 1) - 1);
+  p.likes = (p.likes||0) + 1;
 
-    meustatusLikes[id] = false;
-
-  } else {
-
-    likes[id] = (likes[id] || 0) + 1;
-
-    meustatusLikes[id] = true;
-
-  }
-
-  salvar();
-
-  mostrar();
+  salvar(); mostrar();
 
 }
 
 
-function toggleComentarios(id){
+function toggleCom(id){
 
-  let caixa = document.getElementById('caixa-' + id);
+  let x = document.getElementById('c'+id);
 
-  caixa.style.display = (caixa.style.display === 'block') ? 'none' : 'block';
+  x.style.display = x.style.display=='block'?'none':'block';
 
 }
 
 
 function comentar(id){
 
-  let input = document.getElementById('input-comentario-' + id);
+  let inp = document.getElementById('in'+id);
 
-  let txt = input.value.trim();
+  if(inp.value.trim()=='') return;
 
-  if(txt === '') return;
+  let p = dados.posts.find(x=>x.id==id);
 
+  p.coms.push(inp.value);
 
-  if(!comentarios[id]) comentarios[id] = [];
-
-  comentarios[id].push(txt);
-
-  salvar();
-
-  
-
-  let lista = document.getElementById('lista-comentarios-' + id);
-
-  lista.innerHTML += `<div class="comentario">${txt}</div>`;
-
-  
-
-  document.getElementById('txt-coment-' + id).innerText = `Comentar (${comentarios[id].length})`;
-
-  input.value = '';
+  inp.value=''; salvar(); mostrar();
 
 }
 
 
-function compartilhar(id){
+function compartilharWhats(id){
 
-  let p = posts.find(item => item.id === id);
+  let p = dados.posts.find(x=>x.id==id);
 
   if(!p) return;
 
+  let mensagem = `*${p.titulo}*\n\n${p.conteudo}`;
 
-  let textoParaCopiar = `${p.titulo}\n${p.conteudo}`;
-
-
-  if (navigator.share && window.location.protocol.startsWith('https')) {
-
-    navigator.share({
-
-      title: p.titulo,
-
-      text: textoParaCopiar,
-
-      url: window.location.href
-
-    }).catch(() => {});
-
-  } else {
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-
-      navigator.clipboard.writeText(textoParaCopiar).then(() => {
-
-        alert('Texto copiado com sucesso!');
-
-      }).catch(() => {
-
-        prompt('Copie o texto do post abaixo:', textoParaCopiar);
-
-      });
-
-    } else {
-
-      prompt('Copie o texto do post abaixo:', textoParaCopiar);
-
-    }
-
-  }
+  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`, '_blank');
 
 }
 
 
 function mostrar(){
 
-  let feed = document.getElementById('feed');
+  // MOSTRAR POSTS
 
-  feed.innerHTML = '';
-
-  
-
-  posts.forEach(p => {
-
-    let comsHtml = '';
-
-    if(comentarios[p.id]){
-
-      comentarios[p.id].forEach(com => {
-
-        comsHtml += `<div class="comentario">${com}</div>`;
-
-      });
-
-    }
-
-
-    let qtdLikes = likes[p.id] || 0;
-
-    let classeCurtido = meustatusLikes[p.id] ? 'curtido' : '';
-
-    let qtdComentarios = comentarios[p.id] ? comentarios[p.id].length : 0;
-
-
-    feed.innerHTML += `
+  feed.innerHTML = dados.posts.map(p=>`
 
     <div class="card">
 
@@ -332,63 +461,75 @@ function mostrar(){
 
       <h2>${p.titulo}</h2>
 
-      ${p.imagem ? `<img src="${p.imagem}" onerror="this.style.display='none'">` : ''}
+      ${p.imagem?`<img src="${p.imagem}" onerror="this.style.display='none'">`:''}
 
       <p>${p.conteudo}</p>
 
-
       <div class="botoes-container">
 
-        <button type="button" class="btn-acao ${classeCurtido}" onclick="curtir(${p.id})">
+        <button class="btn-acao" onclick="curtir(${p.id})">🤍 ${p.likes||0}</button>
 
-          <span class="icone">${meustatusLikes[p.id] ? '❤️' : '🤍'}</span>
+        <button class="btn-acao" onclick="toggleCom(${p.id})">💬 ${p.coms.length}</button>
 
-          <span>${qtdLikes}</span>
-
-        </button>
-
-        
-
-        <button type="button" class="btn-acao" onclick="toggleComentarios(${p.id})">
-
-          <span class="icone">💬</span>
-
-          <span id="txt-coment-${p.id}">Comentar (${qtdComentarios})</span>
-
-        </button>
-
-        
-
-        <button type="button" class="btn-acao" onclick="compartilhar(${p.id})">
-
-          <span class="icone">📤</span>
-
-          <span>Compartilhar</span>
-
-        </button>
+        <button class="btn-acao btn-whatsapp" onclick="compartilharWhats(${p.id})">📲 Whats</button>
 
       </div>
 
-
-      <div class="caixa-comentario" id="caixa-${p.id}">
+      <div class="caixa-comentario" id="c${p.id}">
 
         <div class="caixa-input">
 
-          <input type="text" id="input-comentario-${p.id}" placeholder="Escreva um comentário...">
+          <input id="in${p.id}" placeholder="Escreva um comentário...">
 
-          <button type="button" onclick="comentar(${p.id})">Enviar</button>
+          <button onclick="comentar(${p.id})">Enviar</button>
 
         </div>
 
-        <div id="lista-comentarios-${p.id}">${comsHtml}</div>
+        ${p.coms.map(c=>`<div class="comentario">${c}</div>`).join('')}
 
       </div>
 
-    </div>`;
+    </div>
 
-  });
+  `).join('');
+
+
+  // MOSTRAR PRODUTOS
+
+  if(dados.produtos.length == 0){
+
+    listaProdutos.innerHTML = `<p style="text-align:center; color:#8e95a0;">Nenhum produto cadastrado no momento.</p>`;
+
+  } else {
+
+    listaProdutos.innerHTML = dados.produtos.map(pr=>`
+
+      <div class="produto">
+
+        ${pr.imagem ? `<img src="${pr.imagem}" onerror="this.style.display='none'">` : ''}
+
+        <h3>${pr.nome}</h3>
+
+        <p>${pr.desc || ''}</p>
+
+        <div class="preco">R$ ${pr.preco}</div>
+
+        <a href="https://wa.me/${TELEFONE_WHATS}?text=Olá!%20Tenho%20interesse%20no%20produto:%20${encodeURIComponent(pr.nome)}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:bold;">
+
+          💬 Comprar pelo WhatsApp
+
+        </a>
+
+      </div>
+
+    `).join('');
+
+  }
 
 }
+
+
+mostrar();
 
 </script>
 

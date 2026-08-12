@@ -1,18 +1,29 @@
 
 [
 
- {
+  {
 
-  "titulo":"Primeira notícia SAGC",
+    "titulo": "Bem-vindo ao SAGC!",
 
-  "data":"30/07/2026",
+    "data": "01/08/2026",
 
-  "imagem":"foto1.jpg",
+    "imagem": "https://picsum.photos/400/200",
 
-  "conteudo":"Meu blog está funcionando!"
+    "conteudo": "Este é o primeiro post vindo diretamente do seu arquivo posts.json!"
 
- }
+  },
+
+  {
+
+    "titulo": "Segundo Post do Blog",
+
+    "data": "01/08/2026",
+
+    "conteudo": "Você pode adicionar novos posts editando o arquivo JSON facilmente."
+
+  }
 
 ]
+
 
 

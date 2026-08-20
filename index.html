@@ -26,8 +26,6 @@ header { background: #118a7e; color: white; padding: 16px; text-align: center; f
 
 .menu button.ativo { background: white; color: #118a7e; }
 
-.menu button.btn-admin-menu { background: rgba(0,0,0,0.25); }
-
 
 .container { max-width: 450px; margin: 20px auto; padding: 0 12px; }
 
@@ -36,29 +34,13 @@ header { background: #118a7e; color: white; padding: 16px; text-align: center; f
 .pagina.ativa { display: block; }
 
 
-.card-form,.card,.produto,.sobre { background: white; border-radius: 12px; padding: 18px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-
-
-/* ESTILO DO PAINEL ADMIN */
-
-.card-form { border: 2px solid #118a7e; }
-
-.card-form h3 { color: #118a7e; margin: 0 0 12px 0; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
-
-
-.abas-admin { display: flex; gap: 6px; margin-bottom: 12px; }
-
-.abas-admin button { flex: 1; padding: 6px; border: 1px solid #118a7e; background: #f0fdfa; color: #118a7e; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
-
-.abas-admin button.ativa { background: #118a7e; color: white; }
+.card,.produto,.sobre { background: white; border-radius: 12px; padding: 18px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
 
 
 .titulo-pagina { color: #118a7e; margin: 0 0 15px 0; font-size: 20px; font-weight: bold; }
 
 
 input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #e1e5eb; border-radius: 8px; font-size: 14px; background: #fafbfc; }
-
-button.btn-publicar { width: 100%; padding: 12px; background: #118a7e; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; }
 
 
 /* FEED POSTS */
@@ -116,70 +98,10 @@ button.btn-publicar { width: 100%; padding: 12px; background: #118a7e; color: wh
 
   <button onclick="abrir('sobre', this)">ℹ️ Sobre</button>
 
-  <button class="btn-admin-menu" onclick="autenticarAdmin()">🔒 Admin</button>
-
 </div>
 
 
 <div class="container">
-
-  
-
-  <!-- PAINEL ADMIN COM DUAS ABAS (FICA OCULTO POR PADRÃO) -->
-
-  <div class="card-form" id="boxAdmin" style="display: none;">
-
-    <h3>
-
-      Painel Administrativo
-
-      <button onclick="sairAdmin()" style="background:#e74c3c; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;">Sair</button>
-
-    </h3>
-
-    
-
-    <div class="abas-admin">
-
-      <button id="tabPost" class="ativa" onclick="mudarFormAdmin('post')">📝 Nova Publicação</button>
-
-      <button id="tabProd" onclick="mudarFormAdmin('prod')">🛒 Novo Produto</button>
-
-    </div>
-
-
-    <!-- FORMULÁRIO 1: POST DO FEED -->
-
-    <div id="formPost">
-
-      <input type="text" id="tituloPost" placeholder="Título da publicação...">
-
-      <input type="text" id="imagemPost" placeholder="Nome da imagem na pasta (ex: foto1.jpg)">
-
-      <textarea id="conteudoPost" placeholder="Escreva o texto do post..." rows="3"></textarea>
-
-      <button class="btn-publicar" onclick="publicarPost()">Publicar Post</button>
-
-    </div>
-
-
-    <!-- FORMULÁRIO 2: NOVO PRODUTO -->
-
-    <div id="formProd" style="display: none;">
-
-      <input type="text" id="nomeProd" placeholder="Nome do Produto...">
-
-      <input type="text" id="precoProd" placeholder="Preço (ex: 150,00)">
-
-      <input type="text" id="imagemProd" placeholder="Nome da imagem (ex: produto1.jpg)">
-
-      <textarea id="descProd" placeholder="Descrição do produto..." rows="2"></textarea>
-
-      <button class="btn-publicar" onclick="cadastrarProduto()">Cadastrar Produto</button>
-
-    </div>
-
-  </div>
 
 
   <section id="inicio" class="pagina ativa">
@@ -209,15 +131,6 @@ button.btn-publicar { width: 100%; padding: 12px; background: #118a7e; color: wh
 
 
 <script>
-
-let SENHA_ADMIN = "SAGC@2026#Admin!";
-
-let adminLogado = false;
-
-let tentativasAdmin = 0;
-
-let bloqueioAdminAte = 0;
-
 
 let TELEFONE_WHATS = "5538984191501"; // SEU NÚMERO COM DDD
 
@@ -257,92 +170,6 @@ function salvar(){
 }
 
 
-function autenticarAdmin(){
-
-  let agora = Date.now();
-
-  if (agora < bloqueioAdminAte) {
-
-    let segundosRestantes = Math.ceil((bloqueioAdminAte - agora) / 1000);
-
-    alert(`Muitas tentativas incorretas. Aguarde ${segundosRestantes} segundos.`);
-
-    return;
-
-  }
-
-
-  let box = document.getElementById('boxAdmin');
-
-  if(adminLogado || box.style.display === 'block'){
-
-    alert('Você já está no modo Admin.');
-
-    return;
-
-  }
-
-  
-
-  let senha = prompt('Digite a senha de Administrador:');
-
-  if(senha === SENHA_ADMIN){
-
-    adminLogado = true;
-
-    tentativasAdmin = 0;
-
-    box.style.display = 'block';
-
-  } else if(senha !== null) {
-
-    tentativasAdmin++;
-
-    if (tentativasAdmin >= 3) {
-
-      bloqueioAdminAte = Date.now() + 30000; // Bloqueia por 30 segundos
-
-      alert('3 tentativas incorretas! Acesso temporariamente bloqueado por 30 segundos.');
-
-    } else {
-
-      alert(`Senha incorreta! Tentativa ${tentativasAdmin} de 3.`);
-
-    }
-
-  }
-
-}
-
-
-function sairAdmin(){
-
-  adminLogado = false;
-
-  document.getElementById('boxAdmin').style.display = 'none';
-
-}
-
-
-function mudarFormAdmin(tipo){
-
-  if(tipo === 'post'){
-
-    tabPost.classList.add('ativa'); tabProd.classList.remove('ativa');
-
-    formPost.style.display = 'block'; formProd.style.display = 'none';
-
-  } else {
-
-    tabProd.classList.add('ativa'); tabPost.classList.remove('ativa');
-
-    formProd.style.display = 'block'; formPost.style.display = 'none';
-
-  }
-
-}
-
-
 function abrir(n,b){
 
   document.querySelectorAll('.pagina').forEach(p=>p.classList.remove('ativa'));
@@ -352,36 +179,6 @@ function abrir(n,b){
   document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('ativo'));
 
   if(b) b.classList.add('ativo');
-
-}
-
-
-function publicarPost(){
-
-  let t=tituloPost.value.trim(), i=imagemPost.value.trim(), c=conteudoPost.value.trim();
-
-  if(!t||!c) return alert('Preencha título e texto');
-
-  dados.posts.unshift({id:Date.now(), data:new Date().toLocaleDateString('pt-BR'), titulo:t, imagem:i, conteudo:c, likes:0, coms:[]});
-
-  salvar(); tituloPost.value=imagemPost.value=conteudoPost.value='';
-
-  mostrar(); sairAdmin();
-
-}
-
-
-function cadastrarProduto(){
-
-  let n=nomeProd.value.trim(), p=precoProd.value.trim(), i=imagemProd.value.trim(), d=descProd.value.trim();
-
-  if(!n||!p) return alert('Preencha nome e preço do produto');
-
-  dados.produtos.unshift({id:Date.now(), nome:n, preco:p, imagem:i, desc:d});
-
-  salvar(); nomeProd.value=precoProd.value=imagemProd.value=descProd.value='';
-
-  mostrar(); sairAdmin(); abrir('produtos', document.querySelectorAll('.menu button')[1]);
 
 }
 

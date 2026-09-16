@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="pt-BR">
@@ -132,7 +133,7 @@ input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px s
 
 <script>
 
-let TELEFONE_WHATS = "5538984191501"; // SEU NÚMERO COM DDD
+let TELEFONE_WHATS = "5538984191501"; 
 
 
 let dados = { posts: [], produtos: [] };
@@ -140,7 +141,9 @@ let dados = { posts: [], produtos: [] };
 
 try {
 
-  dados = JSON.parse(localStorage.getItem('sagc_v3')) || dados;
+  // Alterado a versão para 'sagc_v4' para forçar a atualização dos dados do app
+
+  dados = JSON.parse(localStorage.getItem('sagc_v4')) || dados;
 
 } catch(e) {
 
@@ -165,7 +168,7 @@ if(!dados.produtos){
 
 function salvar(){
 
-  localStorage.setItem('sagc_v3', JSON.stringify(dados));
+  localStorage.setItem('sagc_v4', JSON.stringify(dados));
 
 }
 
@@ -296,7 +299,7 @@ function mostrar(){
 
         <div class="preco">R$ ${pr.preco}</div>
 
-        <a href="https://wa.me/${5538984191501}?text=Olá!%20Tenho%20interesse%20no%20produto:%20${encodeURIComponent(pr.nome)}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:bold;">
+        <a href="https://wa.me/5538984191501?text=Olá!%20Tenho%20interesse%20no%20produto:%20${encodeURIComponent(pr.nome)}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:bold;">
 
           💬 Comprar pelo WhatsApp
 
@@ -319,5 +322,6 @@ mostrar();
 </body>
 
 </html>
+
 
 

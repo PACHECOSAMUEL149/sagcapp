@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="pt-BR">
@@ -72,9 +73,7 @@ input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px s
 
 <body>
 
-
 <header>SAGC</header>
-
 
 <div class="menu">
 
@@ -86,16 +85,9 @@ input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px s
 
 </div>
 
-
 <div class="container">
 
-
-  <section id="inicio" class="pagina ativa">
-
-    <div id="feed"></div>
-
-  </section>
-
+  <section id="inicio" class="pagina ativa"><div id="feed"></div></section>
 
   <section id="produtos" class="pagina">
 
@@ -105,35 +97,21 @@ input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px s
 
   </section>
 
-
   <section id="sobre" class="pagina">
 
     <div class="sobre"><h2 class="titulo-pagina">ℹ️ Sobre</h2><h3>SAGC</h3><p>Reúne notícias e produtos.</p></div>
 
   </section>
 
-
 </div>
-
 
 <script>
 
 let TELEFONE_WHATS = "5538984191501"; 
 
-
 let dados = { posts: [], produtos: [] };
 
-
-try {
-
-  dados = JSON.parse(localStorage.getItem('sagc_v4')) || dados;
-
-} catch(e) {
-
-  console.log("Resetando dados");
-
-}
-
+try { dados = JSON.parse(localStorage.getItem('sagc_v4')) || dados; } catch(e){}
 
 if(!dados.posts || dados.posts.length == 0){
 
@@ -141,20 +119,9 @@ if(!dados.posts || dados.posts.length == 0){
 
 }
 
+if(!dados.produtos){ dados.produtos = []; }
 
-if(!dados.produtos){
-
-  dados.produtos = [];
-
-}
-
-
-function salvar(){
-
-  localStorage.setItem('sagc_v4', JSON.stringify(dados));
-
-}
-
+function salvar(){ localStorage.setItem('sagc_v4', JSON.stringify(dados)); }
 
 function abrir(n,b){
 
@@ -168,7 +135,6 @@ function abrir(n,b){
 
 }
 
-
 function curtir(id){
 
   let p = dados.posts.find(x=>x.id==id);
@@ -179,7 +145,6 @@ function curtir(id){
 
 }
 
-
 function toggleCom(id){
 
   let x = document.getElementById('c'+id);
@@ -187,7 +152,6 @@ function toggleCom(id){
   x.style.display = x.style.display=='block'?'none':'block';
 
 }
-
 
 function comentar(id){
 
@@ -203,23 +167,23 @@ function comentar(id){
 
 }
 
-
 function compartilharWhats(id){
 
   let p = dados.posts.find(x=>x.id==id);
 
   if(!p) return;
 
-  let mensagem = `*${p.titulo}*\n\n${p.conteudo}\n\nVi no app SAGC`;
+  let mensagem = '*' + p.titulo + '*\n\n' + p.conteudo + '\n\nVi no app SAGC';
 
-  window.open(`https://wa.me/${TELEFONE_WHATS}?text=${encodeURIComponent(mensagem)}`, '_blank');
+  let link = 'https://wa.me/' + TELEFONE_WHATS + '?text=' + encodeURIComponent(mensagem);
+
+  window.open(link, '_blank');
 
 }
 
-
 function mostrar(){
 
-  feed.innerHTML = dados.posts.map(p=>`
+  document.getElementById('feed').innerHTML = dados.posts.map(p=>`
 
     <div class="card">
 
@@ -237,7 +201,75 @@ function mostrar(){
 
         <button class="btn-acao" onclick="toggleCom(${p.id})">💬 ${p.coms.length}</button>
 
-        <button class="btn
+        <button class="btn-acao btn-whatsapp" onclick="compartilharWhats(${p.id})">📲 Whats</button>
 
+      </div>
+
+      <div class="caixa-comentario" id="c${p.id}">
+
+        <div class="caixa-input">
+
+          <input id="in${p.id}" placeholder="Escreva um comentário...">
+
+          <button onclick="comentar(${p.id})">Enviar</button>
+
+        </div>
+
+        ${p.coms.map(c=>`<div class="comentario">${c}</div>`).join('')}
+
+      </div>
+
+    </div>
+
+  `).join('');
+
+
+  let lista = document.getElementById('listaProdutos');
+
+  if(dados.produtos.length == 0){
+
+    lista.innerHTML = `<p style="text-align:center; color:#8e95a0;">Nenhum produto cadastrado no momento.</p>`;
+
+  } else {
+
+    lista.innerHTML = dados.produtos.map(pr=>{
+
+      let msgProd = 'Olá! Tenho interesse no produto: ' + pr.nome;
+
+      let linkProd = 'https://wa.me/' + TELEFONE_WHATS + '?text=' + encodeURIComponent(msgProd);
+
+      return `
+
+      <div class="produto">
+
+        ${pr.imagem ? `<img src="${pr.imagem}" onerror="this.style.display='none'">` : ''}
+
+        <h3>${pr.nome}</h3>
+
+        <p>${pr.desc || ''}</p>
+
+        <div class="preco">R$ ${pr.preco}</div>
+
+        <a href="${linkProd}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:bold;">
+
+          💬 Comprar pelo WhatsApp
+
+        </a>
+
+      </div>`;
+
+    }).join('');
+
+  }
+
+}
+
+mostrar();
+
+</script>
+
+</body>
+
+</html>
 
 

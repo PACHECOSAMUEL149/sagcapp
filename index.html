@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="pt-BR">
@@ -236,7 +235,136 @@ function mostrar(){
 
       let msgProd = 'Olá! Tenho interesse no produto: ' + pr.nome;
 
-      let linkProd = 'https://wa.me/' + TELEFONE_WHATS + '?text=' + encodeURIComponent(msgProd);
+      <script>
+
+let TELEFONE_WHATS = "5538984191501"; 
+
+let dados = { posts: [], produtos: [] };
+
+try { dados = JSON.parse(localStorage.getItem('sagc_v4')) || dados; } catch(e){}
+
+if(!dados.posts || dados.posts.length == 0){
+
+  dados.posts = [{id:1, data:'08/08/2026', titulo:'Bem vindo ao SAGC', imagem:'', conteudo:'Agora sim está funcionando!', likes:0, coms:[]}];
+
+}
+
+if(!dados.produtos){ dados.produtos = []; }
+
+function salvar(){ localStorage.setItem('sagc_v4', JSON.stringify(dados)); }
+
+function abrir(n,b){
+
+  document.querySelectorAll('.pagina').forEach(p=>p.classList.remove('ativa'));
+
+  document.getElementById(n).classList.add('ativa');
+
+  document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('ativo'));
+
+  if(b) b.classList.add('ativo');
+
+}
+
+function curtir(id){
+
+  let p = dados.posts.find(x=>x.id==id);
+
+  p.likes = (p.likes||0) + 1;
+
+  salvar(); mostrar();
+
+}
+
+function toggleCom(id){
+
+  let x = document.getElementById('c'+id);
+
+  x.style.display = x.style.display=='block'?'none':'block';
+
+}
+
+function comentar(id){
+
+  let inp = document.getElementById('in'+id);
+
+  if(inp.value.trim()=='') return;
+
+  let p = dados.posts.find(x=>x.id==id);
+
+  p.coms.push(inp.value);
+
+  inp.value=''; salvar(); mostrar();
+
+}
+
+function compartilharWhats(id){
+
+  let p = dados.posts.find(x=>x.id==id);
+
+  if(!p) return;
+
+  let mensagem = '*' + p.titulo + '*\n\n' + p.conteudo;
+
+  window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(mensagem), '_blank');
+
+}
+
+function mostrar(){
+
+  document.getElementById('feed').innerHTML = dados.posts.map(p=>`
+
+    <div class="card">
+
+      <div class="data">${p.data}</div>
+
+      <h2>${p.titulo}</h2>
+
+      ${p.imagem?`<img src="${p.imagem}" onerror="this.style.display='none'">`:''}
+
+      <p>${p.conteudo}</p>
+
+      <div class="botoes-container">
+
+        <button class="btn-acao" onclick="curtir(${p.id})">🤍 ${p.likes||0}</button>
+
+        <button class="btn-acao" onclick="toggleCom(${p.id})">💬 ${p.coms.length}</button>
+
+        <button class="btn-acao btn-whatsapp" onclick="compartilharWhats(${p.id})">📲 Whats</button>
+
+      </div>
+
+      <div class="caixa-comentario" id="c${p.id}">
+
+        <div class="caixa-input">
+
+          <input id="in${p.id}" placeholder="Escreva um comentário...">
+
+          <button onclick="comentar(${p.id})">Enviar</button>
+
+        </div>
+
+        ${p.coms.map(c=>`<div class="comentario">${c}</div>`).join('')}
+
+      </div>
+
+    </div>
+
+  `).join('');
+
+
+  let lista = document.getElementById('listaProdutos');
+
+  if(dados.produtos.length == 0){
+
+    lista.innerHTML = `<p style="text-align:center; color:#8e95a0;">Nenhum produto cadastrado no momento.</p>`;
+
+  } else {
+
+    lista.innerHTML = dados.produtos.map(pr=>{
+
+      let msg = 'Olá! Tenho interesse no produto: ' + pr.nome;
+
+      let link = 'https://wa.me/' + TELEFONE_WHATS + '?text=' + encodeURIComponent(msg);
 
       return `
 
@@ -250,11 +378,7 @@ function mostrar(){
 
         <div class="preco">R$ ${pr.preco}</div>
 
-        <a href="${linkProd}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:bold;">
-
-          💬 Comprar pelo WhatsApp
-
-        </a>
+        <a href="${link}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:bold;">💬 Comprar pelo WhatsApp</a>
 
       </div>`;
 
@@ -268,8 +392,5 @@ mostrar();
 
 </script>
 
-</body>
-
-</html>
 
 
